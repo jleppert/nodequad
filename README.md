@@ -80,11 +80,11 @@ Contributing
 
 * Setup a branch for what you are working on:
 
-	git checkout -b my-new-feature
+	`git checkout -b my-new-feature`
 
-* Test your changes
+* Test your changes with existing tests
 
-	npm test
+	`npm test`
 
 * Add unit tests under `tests/`
 * Add a description of your changes to the `CHANGELOG.md`. Link to any associated issue.

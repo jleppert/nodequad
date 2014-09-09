@@ -1,0 +1,15 @@
+language: node_js
+node_js:
+  - "0.13.0"
+env:
+  - TEST="all"
+  - TEST="node"
+notifications:
+  email:
+    - johnathan.leppert@gmail.com
+before_install:
+  - npm install -g npm@1.4
+  - npm --version
+  - npm install -g gulp
+script:
+  - "[ $TEST = 'all' ] && gulp test"

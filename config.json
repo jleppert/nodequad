@@ -1,0 +1,117 @@
+{
+	"vehicle": {
+		"version": 3.2,
+		"type": "aeroquad32",
+		"flight_config": "Quad X",
+		"motor_count": 4,
+		"receiver_channels": 8,
+		"voltage_reference": 5,
+		"min_armed_throttle": 1150,
+		"sensors": {
+			"gyro": true,
+			"accelerometer": true,
+			"barometer": false,
+			"magnetometer": false
+		},
+		"enabled_features": {
+			"heading_hold": false,
+			"altitude_hold": false,
+			"battery_monitor": false,
+			"camera_stabilization": false,
+			"range_detection": false,
+			"gps": false
+		}
+	},
+	"pid": {
+		"rate": {
+			"roll": [1.0, 1.1, 1.2],
+			"pitch": [1.3, 1.4, 1.5],
+			"rotation_speed": 1.9
+		},
+		"attitude": {
+			"roll_accel": [3.5, 0, 0],
+			"pitch_accel": [3.5, 0, 0],
+			"roll_gyro": [100, 0, -350],
+			"pitch_gyro": [100, 0, -350],
+			"windup_guard": 1000
+		},
+		"altitude_hold": {
+			"pid": [0, 0, 0],
+			"windup_guard": 0,
+			"throttle_bump": 0,
+			"throttle_panic": 0,
+			"min_throttle_adjust": 0,
+			"max_throttle_adjust": 0,
+			"smooth_factor": 0,
+			"z_dampening": [0, 0, 0]
+		},
+		"gps_hold": {
+			"roll":  [0, 0, 0],
+			"pitch": [0, 0, 0],
+			"yaw":   [0, 0, 0]
+		},
+		"heading_hold": {
+			"yaw": [200, 5, 0],
+			"pid": [0, 0, 0],
+			"config": 0
+		}
+	},
+	"sensors": {
+		"accelerometer": {
+			"scale_factor": [0, 0, 0]
+		},
+		"gyro": {},
+		"magnetometer": {},
+		"range_finder": {
+			"max": 0,
+			"min": 0
+		}
+	},
+	"camera": {
+		"stabilization": {
+			"mode": 0,
+			"center": {
+				"pitch": 0,
+				"roll": 0,
+				"yaw": 0
+			},
+			"scale_angle": {
+				"pitch": 0,
+				"roll": 0,
+				"yaw": 0
+			},
+			"servo": {
+				"min": {
+					"pitch": 0,
+					"roll": 0,
+					"yaw": 0
+				},
+				"max": {
+					"pitch": 0,
+					"roll": 0,
+					"yaw": 0
+				}
+			}
+		}
+	},
+	"transmitter": {
+		"smoothing": {
+			"factor": 1,
+			"roll": 1,
+			"pitch": 1,
+			"yaw": 0.5,
+			"throttle": 1,
+			"mode": 1,
+			"aux1": 1,
+			"aux2": 1,
+			"aux3": 1,
+			"aux4": 0,
+			"aux5": 0
+		}
+	},
+	"battery_monitor": {
+		"alarm_voltage": 0,
+		"throttle_target": 0,
+		"down_time": 0
+	}
+}

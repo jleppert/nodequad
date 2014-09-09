@@ -1,0 +1,13 @@
+var O = require('observed');
+
+var obj = { name: {} };
+var ee = O(obj);
+
+ee.on('change', console.log);
+
+//obj.name.last = 'something';
+
+obj.something = {};
+//obj.something.blah = {};
+
+

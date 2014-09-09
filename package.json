@@ -1,0 +1,59 @@
+{
+  "name": "nodequad",
+  "title": "Aeroquad - Node Interface",
+  "version": "0.0.1",
+  "author": {
+    "name": "Johnathan Leppert",
+    "url": "http://jleppert.github.com/nodequad"
+  },
+  "homepage": "http://jleppert.github.io/nodequad/",
+  "description": "Node library to communicate with nodequad multicopter platform",
+  "keywords": [
+    "nodequad",
+    "quadcopter",
+    "multicopter",
+    "multirotor"
+  ],
+  "bugs": {
+    "url": "http://github.com/jleppert/nodequad/issues",
+    "email": "johnathan.leppert@gmail.com"
+  },
+  "contributors": [
+    {
+      "name": "Johnathan Leppert",
+      "email": "johnathan.leppert@gmail.com"
+    }
+  ],
+  "scripts": {
+    "test": "node ./tests/run-cli.js"
+  },
+  "bin": {
+    "nodequad": "./bin/nodequad-cli"
+  },
+  "man": {
+    "name": "nodequad",
+    "version": "0.0.1",
+    "description": "Control your aeroquad using the command line",
+    "main": "./bin/nodequad-cli",
+    "man": "./man/doc.1"
+  },
+  "directories": {
+    "lib": "./lib",
+    "bin": "./bin",
+    "man": "./man",
+    "doc": "./doc",
+    "example": "./examples"
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jleppert/nodequad.git"
+  },
+  "devDependencies": {
+    "doxx": "^0.7.4"
+  },
+  "license": "MIT",
+  "engine": {
+    "node": ">=0.13.0"
+  }
+}

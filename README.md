@@ -17,10 +17,10 @@ A command line interface is provided to send commands and receive telemetry data
 Getting Started
 ---------------
 * The AeroQuad manual, forum and project: <http://aeroquad.com>
-* Read a quick tutorial on how to use this library: <http://github.io/jleppert/nodequad/tutorial>
-* Look at generated library API Documentation at <http://github.io/jleppert/nodequad/docs>
-* Browse the examples under the examples directory of the project: <http://github.io/jleppert/nodequad/docs/examples>
-* A command line reference is available at <http://github.io/jleppert/nodequad/docs/bin/nodequad-cli>
+* Read a quick tutorial on how to use this library: <http://jleppert.github.io/nodequad/tutorial>
+* Look at generated library API Documentation at <http://jleppert.github.io/nodequad/docs>
+* Browse the examples under the examples directory of the project: <http://jleppert.github.io/nodequad/examples>
+* A command line reference is available at <http://jleppert.github.io/nodequad/docs/bin/nodequad-cli>
 
 Quick Start
 ---------------
@@ -71,7 +71,7 @@ Running Tests
 
 	npm test
 
-To view/generate test coverage report <http://github.io/jleppert/nodequad/test/coverage>:
+To view/generate test coverage report <http://jleppert.github.io/nodequad/test/coverage>:
 
 	npm test-coverage
 

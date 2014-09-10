@@ -17,10 +17,10 @@ A command line interface is provided to send commands and receive telemetry data
 Getting Started
 ---------------
 * The AeroQuad manual, forum and project: <http://aeroquad.com>
-* Read a quick tutorial on how to use this library: <http://jleppert.github.io/nodequad/tutorial>
-* Look at generated library API Documentation at <http://jleppert.github.io/nodequad/release/docs>
-* Browse the examples under the examples directory of the project: <http://jleppert.github.io/nodequad/release/docs/examples>
-* A command line reference is available at <http://jleppert.github.io/nodequad/release/docs/bin/nodequad-cli>
+* Read a quick tutorial on how to use this library: <http://jleppert.github.io/nodequad/release/doc/tutorial>
+* Look at generated library API Documentation at <http://jleppert.github.io/nodequad/release/doc/lib>
+* Browse the examples under the examples directory of the project: <http://jleppert.github.io/nodequad/release/doc/examples>
+* A command line reference is available at <http://jleppert.github.io/nodequad/release/doc/bin>
 
 Quick Start
 ---------------

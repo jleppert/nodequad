@@ -18,14 +18,14 @@ Getting Started
 ---------------
 * The AeroQuad manual, forum and project: <http://aeroquad.com>
 * Read a quick tutorial on how to use this library: <http://jleppert.github.io/nodequad/tutorial>
-* Look at generated library API Documentation at <http://jleppert.github.io/nodequad/docs>
-* Browse the examples under the examples directory of the project: <http://jleppert.github.io/nodequad/examples>
-* A command line reference is available at <http://jleppert.github.io/nodequad/docs/bin/nodequad-cli>
+* Look at generated library API Documentation at <http://jleppert.github.io/nodequad/release/docs>
+* Browse the examples under the examples directory of the project: <http://jleppert.github.io/nodequad/release/docs/examples>
+* A command line reference is available at <http://jleppert.github.io/nodequad/release/docs/bin/nodequad-cli>
 
 Quick Start
 ---------------
 
-Make sure you have a working AeroQuad flight controller board and can connect to it via the USB connection or a wireless serial connection. For STM32 based flight controllers, you'll need to install the virtual com port driver under Windows, available here: <http://github.io/jleppert/nodequad/dist/VCP_V1.3.1_Setup.exe>.
+Make sure you have a working AeroQuad flight controller board and can connect to it via the USB connection or a wireless serial connection. For STM32 based flight controllers, you'll need to install the virtual com port driver under Windows, available here: <http://jleppert.github.io/nodequad/etc/VCP_V1.3.1_Setup.exe>.
 
 Nodequad also uses new ES6 harmony features such as `Object.observe`, which requires node >= 0.11.13. You can obtain a compatible node version here: <http://blog.nodejs.org/2014/05/02/node-v0-11-13-unstable>.
 
@@ -71,7 +71,7 @@ Running Tests
 
 	npm test
 
-To view/generate test coverage report <http://jleppert.github.io/nodequad/test/coverage>:
+To view/generate test coverage report <http://jleppert.github.io/nodequad/release/test/coverage>:
 
 	npm test-coverage
 

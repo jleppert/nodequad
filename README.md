@@ -31,40 +31,41 @@ Nodequad also uses new ES6 harmony features such as `Object.observe`, which requ
 
 Usage Example
 ----------------
+``` js
+var Nodequad = require('nodequad');
+var vehicle = new Nodequad();
 
-	var Nodequad = require('nodequad');
-	var vehicle = new Nodequad();
+vehicle.probe.andConnect();
 
-	vehicle.probe.andConnect();
+vehicle.on('driver.state.connected', function() {
+	console.log('Connected to aircraft!');
 
-	vehicle.on('driver.state.connected', function() {
-		console.log('Connected to aircraft!');
+	console.log('Reading aircraft flight configuration...');
+	vehicle.sync('config.vehicle.*');
 
-		console.log('Reading aircraft flight configuration...');
-		vehicle.sync('config.vehicle.*');
+	console.log('Changing aircraft PID rate pid.');
+	vehicle.config.pid.rate.roll = new AeroQuad.PID(1.0, 1.1, 1.2);
 
-		console.log('Changing aircraft PID rate pid.');
-		vehicle.config.pid.rate.roll = new AeroQuad.PID(1.0, 1.1, 1.2);
-
-		console.log('Monitoring GPS sensor data...');
-		vehicle.stream('state.gps');
-	});
+	console.log('Monitoring GPS sensor data...');
+	vehicle.stream('state.gps');
+});
 
 
-	// monitor changes in state
-	vehicle.on('state.**', function(key, data) {
-		console.log('Aircraft state changed:', key, value);
-	});
+// monitor changes in state
+vehicle.on('state.**', function(key, data) {
+	console.log('Aircraft state changed:', key, value);
+});
 
-	// monitor when configuration values get changed
-	vehicle.on('config.**', function(key, data) {
-		console.log('Aircraft configuration changed:', key, value);
-	});
+// monitor when configuration values get changed
+vehicle.on('config.**', function(key, data) {
+	console.log('Aircraft configuration changed:', key, value);
+});
 
-	// monitor communication events from the underlying driver, such as connection, disconnection, etc.
-	vehicle.on('driver.**', function() {
-		console.log('Communication event occured:', this.event);
-	});
+// monitor communication events from the underlying driver, such as connection, disconnection, etc.
+vehicle.on('driver.**', function() {
+	console.log('Communication event occured:', this.event);
+});
+```
 
 Running Tests
 ----------------

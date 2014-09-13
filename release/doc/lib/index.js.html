@@ -283,18 +283,21 @@
             </thead>
             <tbody>
               <tr>
+                <td>probeResultsCb</td>
+                <td>Function</td>
+                <td>callback to receive probe results after timeout has expired for all ports</td>
+              </tr>
+              <tr>
                 <td>connectCb</td>
                 <td>Function</td>
-                <td>receive a list of ports</td>
+                <td>if a callback is passed, automatically connect to first found vehicle and return once connected</td>
               </tr>
             </tbody>
           </table>
           <div class="description"><p>Probe attached ports for an available vehicle, may also chain .andConnect() to connect to first found vehicle</p> </div>
-          <pre><code class="language-javascript">Aeroquad.prototype.probe = function probe(connectCb) {
+          <pre><code class="language-javascript">Aeroquad.prototype.probe = function probe(probeResultsCb, connectCb) {
 	var self = this;
-	this.comm.driver.probe(function afterProbeCb() {
-		if(connectCb) connectCb.apply(self, arguments);
-	});
+	this.comm.driver.probe(probeResultsCb, connectCb);
 };</code></pre>
           <section id="sync">
             <h1>sync</h1>

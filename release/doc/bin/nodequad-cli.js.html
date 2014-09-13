@@ -88,7 +88,70 @@
           </div>
         </div>
         <div class="span9">
-          <div class="description"> </div>
+          <div class="description"><p>var nq  = new Nodequad(),<br />    uri = argv.connect &amp;&amp; argv.connect.length ? argv.connect : undefined,<br />    events = {};</p><p>[&#39;driver&#39;, &#39;protocol&#39;].forEach(function(item) {<br />    if(Nodequad[item + &#39;s&#39;][argv[item]] != undefined) {<br />        createCustom(item, Nodequad[item + &#39;s&#39;][argv[item]]);<br />        return;<br />    }</p><pre><code>if(argv[item].length) {
+    try {
+        var custom = require(path.resolve(process.cwd(), argv[item]));
+        if(custom != undefined) {
+            createCustom(item, custom);
+        }
+    } catch(e) {
+        console.log([&#39;Failed to require custom&#39;, item, &#39;:&#39;, e.message].join(&#39; &#39;));
+    }
+}
+
+function createCustom(key, obj) {
+    if(obj === undefined) return;
+    if(key === &#39;driver&#39;) {
+        global[key] = new obj(uri);
+    } else if(key === &#39;protocol&#39;) {
+        global[key] = new obj(nq, { config: nq.config, state: nq.state, methods: nq.methods });
+    }
+}
+</code></pre><p>});</p><p>// handle listing communication ports<br />if(argv.list) {<br />    nq.getDriver().list(function (ports) {<br />        out(ports);<br />        process.exit(0);<br />    });<br />    return;<br />}</p><p>// handle probe and connecting<br />if(argv.probe &amp;&amp; argv.connect) {<br />    nq.probe.andConnect();<br />} else if(argv.probe &amp;&amp; uri === undefined) {<br />    nq.probe(function (ports) {<br />        out(ports);<br />        process.exit(0);<br />    });<br />    return;<br />}</p><p>// handle subscribed events<br />if(argv.on) {<br />    if(!Array.isArray(argv.on)) argv.on = [argv.on];<br />    argv.on.forEach(function(key) {<br />        monitorEvent(key);<br />    });<br />}</p> </div>
+          <pre><code class="language-javascript">// handle (one or more) sync'd properties
+if(argv.sync) {
+    if(!Array.isArray(argv.sync)) argv.sync = [argv.sync];
+    argv.sync.forEach(function(key, i) {
+        if(argv._[i]) {
+            // setting a value
+            objPath.set(nq, key, JSON.parse(argv._[i]));
+        } else {
+            // retreieving a value
+            monitorEvent(key);
+            nq.sync(key);
+        }
+    });
+}
+
+// handle (one or more) streams
+if(argv.stream) {
+    if(!Array.isArray(argv.stream)) argv.stream = [argv.stream];
+    argv.stream.forEach(function(key) {
+        // streaming data
+        monitorEvent(key);
+        nq.stream(key);
+    });
+}
+
+function out(json) {
+    console.log(JSON.stringify(json));
+};
+
+function monitorEvent(key) {
+    if(events[key]) return;
+    nq.on(key, function() {
+        out({
+            on: key,
+            event: this.event,
+            arguments: arguments
+        });
+    });
+    events[key] = true;
+}</code></pre>
+          <div class="description"><p>var protocol = undefined;<br />if(nq.drivers[argv.driver] != undefined) {<br />    driver = nq.drivers[argv.driver];<br />} else {<br />    try {<br />        var customDriver = require(path.resolve(process.cwd(), argv.driver));<br />        if(customDriver) driver = customDriver;<br />    } catch(e) {<br />        console.log(&#39;Failed to require custom driver&#39;, e.message);<br />    }<br />}</p> </div>
+          <pre><code class="language-javascript">//var nq = new nq(argv.connect &amp;&amp; argv.connect.length ? argv.connect : undefined, {
+//	driver: new nq.drivers[argv.driver]
+//})</code></pre>
         </div>
       </div>
     </div>

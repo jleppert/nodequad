@@ -375,14 +375,19 @@ SerialDriver.prototype.name = 'SerialDriver';</code></pre>
             </thead>
             <tbody>
               <tr>
-                <td>alsoConnect</td>
-                <td>Boolean</td>
-                <td>true to connect to first found vehicle</td>
+                <td>probeResultsCb</td>
+                <td>Function</td>
+                <td>callback to receive results of probe once timeouts have expired</td>
+              </tr>
+              <tr>
+                <td>alsoConnectCb</td>
+                <td>Function</td>
+                <td>if a callback is specified, connect to first found vehicle during port probing and callback</td>
               </tr>
             </tbody>
           </table>
           <div class="description"><p>Probes for possible vehicles on ports, optionally connecting based upon heuristic</p> </div>
-          <pre><code class="language-javascript">SerialDriver.prototype.probe = function probe(alsoConnect) {
+          <pre><code class="language-javascript">SerialDriver.prototype.probe = function probe(probeResultsCb, alsoConnectCb) {
 	var self = this;
 
 	if(alsoConnect) {
@@ -393,6 +398,7 @@ SerialDriver.prototype.name = 'SerialDriver';</code></pre>
 		});
 	}
 
+	var found = [];
 	this.list(function probePortList(err, ports) {
 		ports.forEach(function probePort(port) {
 			// if we're already connected to this uri, don't probe it
@@ -403,12 +409,21 @@ SerialDriver.prototype.name = 'SerialDriver';</code></pre>
 						driver.once('data', function(buff) {
 							var data = buff.toString('utf8');
 							if(data.match(PROBE_REGEXP)) {
+								found.push(port);
 								self.emit('pong', port);
 							}
 						});
-						setTimeout(function portProbeTimeout() {
-							driver.close();
-						}, PROBE_RESPONSE_TIMEOUT);
+						(function(port) {
+							port.timeout = setTimeout(function portProbeTimeout() {
+								driver.close();
+								port.timeout = undefined;
+								if(ports.every(function(triedPort) {
+									return triedPort.timeout === undefined ? true : false;
+								})) {
+									if(probeResultsCb) probeResultsCb.call(self, found);
+								}
+							}, PROBE_RESPONSE_TIMEOUT);
+						}(port));
 						_send(PROBE_COMMAND, driver);
 					}(port));			
 				} else {

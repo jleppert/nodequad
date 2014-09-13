@@ -72,12 +72,12 @@ generally can be run from anywhere.
 
 ## DEVELOPER USAGE
 
-Feel free to use this utility in anyway that works for you. However, this is mostly limited to simple functional tests and
+Feel free to use this utility in any way that works for you. However, this is mostly limited to simple functional tests and
 rudimentary applications. For more complicated use cases, consider using the nodequad object API from within a node.js application.
 
 ## CONFIGURATION
 
-You can use the `--driver` and `--protocol` options to define a custom driver and protocol (or one of Nodequad.drivers, or Nodequad.protocols).
+You can use the `--driver` and `--protocol` options to define a custom driver and protocol (or one of `Nodequad.drivers`, or `Nodequad.protocols`).
 Either specify the key name or a path to a file that implements a suitable driver or protocol interface.
 
 ## BUGS

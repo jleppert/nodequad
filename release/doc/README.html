@@ -1,0 +1,72 @@
+<h1 id="nodequad">Nodequad</h1>
+<p><strong>Node library to communicate with AeroQuad open source multirotor platform.</strong></p>
+<p><em>AeroQuad is a fully open source hardware and software platform for multirotor aircraft. More information can be found at <a href="http://aeroquad.com">http://aeroquad.com</a>.</em></p>
+<h2 id="installing">Installing</h2>
+<pre><code>npm install nodequad
+</code></pre><p>A command line interface is provided to send commands and receive telemetry data. To ensure <code>nodequad</code> is in your path, install it globally with npm:</p>
+<pre><code>npm install -g nodequad
+</code></pre><h2 id="getting-started">Getting Started</h2>
+<ul>
+<li>The AeroQuad manual, forum and project: <a href="http://aeroquad.com">http://aeroquad.com</a></li>
+<li>Read a quick tutorial on how to use this library: <a href="http://jleppert.github.io/nodequad/release/doc/tutorial">http://jleppert.github.io/nodequad/release/doc/tutorial</a></li>
+<li>Look at generated library API Documentation at <a href="http://jleppert.github.io/nodequad/release/doc/lib">http://jleppert.github.io/nodequad/release/doc/lib</a></li>
+<li>Browse the examples under the examples directory of the project: <a href="http://jleppert.github.io/nodequad/release/doc/examples">http://jleppert.github.io/nodequad/release/doc/examples</a></li>
+<li>A command line reference is available at <a href="http://jleppert.github.io/nodequad/release/doc/bin">http://jleppert.github.io/nodequad/release/doc/bin</a></li>
+</ul>
+<h2 id="quick-start">Quick Start</h2>
+<p>Make sure you have a working AeroQuad flight controller board and can connect to it via the USB connection or a wireless serial connection. For STM32 based flight controllers, you&#39;ll need to install the virtual com port driver under Windows, available here: <a href="http://jleppert.github.io/nodequad/etc/VCP_V1.3.1_Setup.exe">http://jleppert.github.io/nodequad/etc/VCP_V1.3.1_Setup.exe</a>.</p>
+<p>Nodequad also uses new ES6 harmony features such as <code>Object.observe</code>, which requires node &gt;= 0.11.13. You can obtain a compatible node version here: <a href="http://blog.nodejs.org/2014/05/02/node-v0-11-13-unstable">http://blog.nodejs.org/2014/05/02/node-v0-11-13-unstable</a>.</p>
+<h2 id="usage-example">Usage Example</h2>
+<pre><code class="lang-js">var Nodequad = require(&#39;nodequad&#39;);
+var vehicle = new Nodequad();
+
+vehicle.probe.andConnect();
+
+vehicle.on(&#39;driver.state.connected&#39;, function() {
+    console.log(&#39;Connected to aircraft!&#39;);
+
+    console.log(&#39;Reading aircraft flight configuration...&#39;);
+    vehicle.sync(&#39;config.vehicle.*&#39;);
+
+    console.log(&#39;Changing aircraft PID rate pid.&#39;);
+    vehicle.config.pid.rate.roll = new AeroQuad.PID(1.0, 1.1, 1.2);
+
+    console.log(&#39;Monitoring GPS sensor data...&#39;);
+    vehicle.stream(&#39;state.gps&#39;);
+});
+
+
+// monitor changes in state
+vehicle.on(&#39;state.**&#39;, function(key, data) {
+    console.log(&#39;Aircraft state changed:&#39;, key, value);
+});
+
+// monitor when configuration values get changed
+vehicle.on(&#39;config.**&#39;, function(key, data) {
+    console.log(&#39;Aircraft configuration changed:&#39;, key, value);
+});
+
+// monitor communication events from the underlying driver, such as connection, disconnection, etc.
+vehicle.on(&#39;driver.**&#39;, function() {
+    console.log(&#39;Communication event occured:&#39;, this.event);
+});
+</code></pre>
+<h2 id="running-tests">Running Tests</h2>
+<pre><code>npm test
+</code></pre><p>To view/generate test coverage report <a href="http://jleppert.github.io/nodequad/release/test/coverage">http://jleppert.github.io/nodequad/release/test/coverage</a>:</p>
+<pre><code>npm test-coverage
+</code></pre><h2 id="contributing">Contributing</h2>
+<ul>
+<li><p>Setup a branch for what you are working on:</p>
+<p>  <code>git checkout -b my-new-feature</code></p>
+</li>
+<li><p>Test your changes with existing tests</p>
+<p>  <code>npm test</code></p>
+</li>
+<li><p>Add unit tests under <code>tests/</code></p>
+</li>
+<li>Add a description of your changes to the <code>CHANGELOG.md</code>. Link to any associated issue.</li>
+<li>Add an issue and tag it <code>pull request</code>, including a link to any associated issue. Please send pull requests from your branch so merging is easy.</li>
+</ul>
+<h2 id="reporting-bugs-feature-requests">Reporting Bugs &amp; Feature Requests</h2>
+<p>Please use github to report all bugs and feature requests at <a href="http://github.com/jleppert/nodequad/issues">http://github.com/jleppert/nodequad/issues</a>.</p>

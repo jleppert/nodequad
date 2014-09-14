@@ -4,7 +4,7 @@ Nodequad
 
 *AeroQuad is a fully open source hardware and software platform for multirotor aircraft. More information can be found at <http://aeroquad.com>.*
 
-**Under development. I plan to release at 0.0.9 milestone.**
+___PLEASE NOTE: Under development. I plan to release at 0.0.9 milestone.___
 
 Installing
 ---------------

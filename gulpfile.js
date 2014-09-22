@@ -9,12 +9,14 @@ var gulp 	 = require('gulp'),
 	spawn    = require('child_process').spawn,
 	connect  = require('gulp-connect'),
 	jsdoc    = require('gulp-jsdoc'),
+	mocha    = require('gulp-mocha'),
 	PACKAGE  = require('./package.json');
 
 var sourcePaths = {
 	js: ['lib', 'examples', 'tests', 'bin', 'perf'],
 	ignoreJs: ['drivers/index.js', 'protocols/index.js'],
 	jsFiles: ['lib/**/*.js', 'examples/**/*.js', 'tests/**/*.js', 'bin/**/*.js', 'perf/**/*.js'],
+	testFiles: ['tests/**/*.js'],
 	md: ['README.md', 'CHANGELOG.md'],
 	man: ['man/NODEQUAD-CLI.md'],
 	docTpl: 'etc/docs.jade',
@@ -98,7 +100,8 @@ gulp.task('reload-release', function() {
 
 // runs all unit tests
 gulp.task('test', function() {
-
+	return gulp.src(sourcePaths.testFiles, {read: false})
+			.pipe(mocha({reporter: 'nyan'}));
 });
 
 // generates code coverage report

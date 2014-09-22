@@ -1,6 +1,9 @@
 language: node_js
 node_js:
   - "0.13"
+before_script:
+ - npm install -g gulp
+ - npm install -g mocha
 notifications:
   email:
     - johnathan.leppert@gmail.com

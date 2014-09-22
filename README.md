@@ -1,4 +1,4 @@
-Nodequad
+Nodequad  [![Build Status](https://travis-ci.org/jleppert/nodequad.svg?branch=master)](https://travis-ci.org/jleppert/nodequad)
 ===============
 **Node library to communicate with AeroQuad open source multirotor platform.**
 

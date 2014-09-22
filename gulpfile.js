@@ -105,7 +105,7 @@ gulp.task('reload-release', function() {
 // runs all unit tests
 gulp.task('test', function() {
 	return gulp.src(sourcePaths.testFiles, {read: false})
-			.pipe(mocha({reporter: 'nyan'}));
+			.pipe(mocha());
 });
 
 // generates code coverage report

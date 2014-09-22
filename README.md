@@ -76,9 +76,9 @@ Running Tests
 
 	npm test
 
-To view/generate test coverage report <http://jleppert.github.io/nodequad/release/test/coverage>:
+To view/generate test coverage report <http://jleppert.github.io/nodequad/coverage>:
 
-	npm test-coverage
+	npm run test-coverage
 
 Contributing
 ----------------

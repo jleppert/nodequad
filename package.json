@@ -28,7 +28,8 @@
     "docs": "gulp docs",
     "test": "gulp test",
     "start": "gulp start",
-    "clean": "gulp clean"
+    "clean": "gulp clean",
+    "test-coverage": "gulp cover"
   },
   "bin": {
     "nodequad": "./bin/nodequad-cli"
@@ -59,10 +60,12 @@
     "gulp": "^3.8.8",
     "gulp-changed": "^1.0.0",
     "gulp-connect": "^2.0.6",
+    "gulp-istanbul": "^0.3.1",
     "gulp-jsdoc": "^0.1.4",
     "gulp-markdown": "^1.0.0",
     "gulp-mocha": "^1.1.0",
     "gulp-util": "^3.0.1",
+    "istanbul": "^0.3.2",
     "marked": "^0.3.2",
     "mocha": "^1.21.4",
     "rewire": "^2.1.0",

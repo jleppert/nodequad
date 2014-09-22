@@ -10,12 +10,14 @@ var gulp 	 = require('gulp'),
 	connect  = require('gulp-connect'),
 	jsdoc    = require('gulp-jsdoc'),
 	mocha    = require('gulp-mocha'),
+    istanbul = require('gulp-istanbul'),
 	PACKAGE  = require('./package.json');
 
 var sourcePaths = {
 	js: ['lib', 'examples', 'tests', 'bin', 'perf'],
 	ignoreJs: ['drivers/index.js', 'protocols/index.js'],
-	jsFiles: ['lib/**/*.js', 'examples/**/*.js', 'tests/**/*.js', 'bin/**/*.js', 'perf/**/*.js'],
+	implFiles: ['index.js', 'lib/**/*.js'],
+    jsFiles: ['lib/**/*.js', 'examples/**/*.js', 'tests/**/*.js', 'bin/**/*.js', 'perf/**/*.js'],
 	testFiles: ['tests/**/*.js'],
 	md: ['README.md', 'CHANGELOG.md'],
 	man: ['man/NODEQUAD-CLI.md'],
@@ -105,8 +107,15 @@ gulp.task('test', function() {
 });
 
 // generates code coverage report
-gulp.task('cover', function() {
-
+gulp.task('cover', function(cb) {
+    gulp.src(sourcePaths.implFiles)
+      .pipe(istanbul())
+      .on('finish', function() {
+        gulp.src(sourcePaths.testFiles)
+          .pipe(mocha())
+          .pipe(istanbul.writeReports())
+          .on('end', cb);
+      });
 });
 
 // runs performance test suite

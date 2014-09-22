@@ -1,4 +1,4 @@
-#Nodequad  [![Build Status](https://travis-ci.org/jleppert/nodequad.svg?branch=master)](https://travis-ci.org/jleppert/nodequad) [![Dependency Status](https://gemnasium.com/jleppert/nodequad.svg)](https://gemnasium.com/jleppert/nodequad)
+#Nodequad  [![Build Status](https://travis-ci.org/jleppert/nodequad.svg?branch=master)](https://travis-ci.org/jleppert/nodequad) [![Dependency Status](https://gemnasium.com/jleppert/nodequad.svg)](https://gemnasium.com/jleppert/nodequad) [![Coverage Status](https://coveralls.io/repos/jleppert/nodequad/badge.png)](https://coveralls.io/r/jleppert/nodequad)
 
 [![NPM](https://nodei.co/npm/nodequad.png?compact=true)](https://nodei.co/npm/nodequad/)
 ===============

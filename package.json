@@ -1,7 +1,7 @@
 {
   "name": "nodequad",
   "title": "Aeroquad Multirotor - Node API",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": {
     "name": "Johnathan Leppert",
     "url": "http://jleppert.github.com/nodequad"

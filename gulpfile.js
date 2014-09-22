@@ -1,16 +1,17 @@
-var gulp 	 = require('gulp'),
-	gutil    = require('gulp-util'),
-	through  = require('through2'),
-	del  	 = require('del'),
-	changed  = require('gulp-changed'),
-	markdown = require('gulp-markdown'),
-	Ronn     = require('ronn').Ronn,
-	marked   = require('marked'),
-	spawn    = require('child_process').spawn,
-	connect  = require('gulp-connect'),
-	jsdoc    = require('gulp-jsdoc'),
-	mocha    = require('gulp-mocha'),
-    istanbul = require('gulp-istanbul'),
+var gulp 	  = require('gulp'),
+	gutil     = require('gulp-util'),
+	through   = require('through2'),
+	del  	  = require('del'),
+	changed   = require('gulp-changed'),
+	markdown  = require('gulp-markdown'),
+	Ronn      = require('ronn').Ronn,
+	marked    = require('marked'),
+	spawn     = require('child_process').spawn,
+	connect   = require('gulp-connect'),
+	jsdoc     = require('gulp-jsdoc'),
+	mocha     = require('gulp-mocha'),
+    istanbul  = require('gulp-istanbul'),
+    coveralls = require('gulp-coveralls'),
 	PACKAGE  = require('./package.json');
 
 var sourcePaths = {
@@ -22,7 +23,8 @@ var sourcePaths = {
 	md: ['README.md', 'CHANGELOG.md'],
 	man: ['man/NODEQUAD-CLI.md'],
 	docTpl: 'etc/docs.jade',
-	docMd: 'etc/API.md'
+	docMd: 'etc/API.md',
+    coverCov: 'coverage/lcov.info'
 };
 
 var destPaths = {
@@ -116,6 +118,11 @@ gulp.task('cover', function(cb) {
           .pipe(istanbul.writeReports())
           .on('end', cb);
       });
+});
+
+gulp.task('coveralls', function() {
+    gulp.src('sourcePaths.coverCov')
+     .pipe(coveralls());
 });
 
 // runs performance test suite

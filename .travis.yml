@@ -4,6 +4,8 @@ node_js:
 before_script:
  - npm install -g gulp
  - npm install -g mocha
+after_success:
+ - npm run coveralls
 notifications:
   email:
     - johnathan.leppert@gmail.com

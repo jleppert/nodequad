@@ -7,7 +7,7 @@
     "url": "http://jleppert.github.com/nodequad"
   },
   "homepage": "http://jleppert.github.io/nodequad/",
-  "description": "Node library to communicate with nodequad multicopter platform",
+  "description": "Node library to communicate with aeroquad multicopter platform",
   "keywords": [
     "nodequad",
     "quadcopter",

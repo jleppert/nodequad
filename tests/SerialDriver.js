@@ -114,7 +114,14 @@ describe('lib/drivers/serial.js', function() {
 							if(this.openCb) this.openCb.call(this);
 							cb.call(undefined);
 						}
-					}
+					},
+					close: function(cb) {
+						cb.call(this);
+					},
+					list: function() {
+
+					},
+					pipe: function() {}
 				}
 			},
 			// don't mock this
@@ -212,7 +219,35 @@ describe('lib/drivers/serial.js', function() {
 	});
 
 	describe('.disconnect', function() { 
+		var url    = require('url'),
+			Driver = undefined;
 
+		if(MOCK) {
+			var __SerialDriver = rewire('../lib/drivers/serial.js');
+			__SerialDriver.prototype = mockList(__SerialDriver.prototype);
+			__SerialDriver.__set__('serialPort', serialPortMock(false));
+			// use mocked version
+			Driver 	= __SerialDriver;
+		} else {
+			// otherwise, don't mock
+			Driver  = SerialDriver;
+		}
+
+		it('should close the connection, update state and emit an event', function() {
+			var driver 		 = new Driver(URI);
+				connectCb 	 = sinon.spy(),
+				disconnectCb = sinon.spy(),
+				eventCb      = sinon.spy();
+
+			driver.on(SerialDriver.states.DISCONNECTED, eventCb);
+
+			driver.connect(undefined, connectCb);
+			assert.ok(connectCb.calledOnce);
+			driver.disconnect(disconnectCb);
+			assert.ok(driver.getState() === SerialDriver.states.DISCONNECTED);
+			assert.ok(disconnectCb.calledOnce);
+			assert.ok(eventCb.calledOnce);
+		});
 	});
 
 	describe('.list', function() { 
@@ -228,6 +263,32 @@ describe('lib/drivers/serial.js', function() {
 	});
 
 	describe('.getStream', function() { 
+		var url    = require('url'),
+			Driver = undefined,
+			serial = require('serialport');
 
+		if(MOCK) {
+			var __SerialDriver = rewire('../lib/drivers/serial.js');
+			__SerialDriver.prototype = mockList(__SerialDriver.prototype);
+			__SerialDriver.__set__('serialPort', serialPortMock(false));
+			// use mocked version
+			Driver 	= __SerialDriver;
+			serial  = serialPortMock(false);
+		} else {
+			// otherwise, don't mock
+			Driver  = SerialDriver;
+		}
+
+		it('should return the underlying streaming interface', function() {
+			var driver 		 = new Driver(URI);
+
+			driver.connect();
+			var stream = driver.getStream();
+			assert.ok(stream.on);
+			assert.ok(stream.open);
+			assert.ok(stream.close);
+			assert.ok(stream.list);
+			assert.ok(stream.pipe);
+		});
 	});
 });

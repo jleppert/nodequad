@@ -1,0 +1,1417 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for drivers/serial.js</title>
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" href="../prettify.css">
+
+    <style>
+        body, html {
+            margin:0; padding: 0;
+        }
+        body {
+            font-family: Helvetica Neue, Helvetica,Arial;
+            font-size: 10pt;
+        }
+        div.header, div.footer {
+            background: #eee;
+            padding: 1em;
+        }
+        div.header {
+            z-index: 100;
+            position: fixed;
+            top: 0;
+            border-bottom: 1px solid #666;
+            width: 100%;
+        }
+        div.footer {
+            border-top: 1px solid #666;
+        }
+        div.body {
+            margin-top: 10em;
+        }
+        div.meta {
+            font-size: 90%;
+            text-align: center;
+        }
+        h1, h2, h3 {
+            font-weight: normal;
+        }
+        h1 {
+            font-size: 12pt;
+        }
+        h2 {
+            font-size: 10pt;
+        }
+        pre {
+            font-family: Consolas, Menlo, Monaco, monospace;
+            margin: 0;
+            padding: 0;
+            line-height: 14px;
+            font-size: 14px;
+            -moz-tab-size: 2;
+            -o-tab-size:  2;
+            tab-size: 2;
+        }
+
+        div.path { font-size: 110%; }
+        div.path a:link, div.path a:visited { color: #000; }
+        table.coverage { border-collapse: collapse; margin:0; padding: 0 }
+
+        table.coverage td {
+            margin: 0;
+            padding: 0;
+            color: #111;
+            vertical-align: top;
+        }
+        table.coverage td.line-count {
+            width: 50px;
+            text-align: right;
+            padding-right: 5px;
+        }
+        table.coverage td.line-coverage {
+            color: #777 !important;
+            text-align: right;
+            border-left: 1px solid #666;
+            border-right: 1px solid #666;
+        }
+
+        table.coverage td.text {
+        }
+
+        table.coverage td span.cline-any {
+            display: inline-block;
+            padding: 0 5px;
+            width: 40px;
+        }
+        table.coverage td span.cline-neutral {
+            background: #eee;
+        }
+        table.coverage td span.cline-yes {
+            background: #b5d592;
+            color: #999;
+        }
+        table.coverage td span.cline-no {
+            background: #fc8c84;
+        }
+
+        .cstat-yes { color: #111; }
+        .cstat-no { background: #fc8c84; color: #111; }
+        .fstat-no { background: #ffc520; color: #111 !important; }
+        .cbranch-no { background:  yellow !important; color: #111; }
+
+        .cstat-skip { background: #ddd; color: #111; }
+        .fstat-skip { background: #ddd; color: #111 !important; }
+        .cbranch-skip { background: #ddd !important; color: #111; }
+
+        .missing-if-branch {
+            display: inline-block;
+            margin-right: 10px;
+            position: relative;
+            padding: 0 4px;
+            background: black;
+            color: yellow;
+        }
+
+        .skip-if-branch {
+            display: none;
+            margin-right: 10px;
+            position: relative;
+            padding: 0 4px;
+            background: #ccc;
+            color: white;
+        }
+
+        .missing-if-branch .typ, .skip-if-branch .typ {
+            color: inherit !important;
+        }
+
+        .entity, .metric { font-weight: bold; }
+        .metric { display: inline-block; border: 1px solid #333; padding: 0.3em; background: white; }
+        .metric small { font-size: 80%; font-weight: normal; color: #666; }
+
+        div.coverage-summary table { border-collapse: collapse; margin: 3em; font-size: 110%; }
+        div.coverage-summary td, div.coverage-summary table  th { margin: 0; padding: 0.25em 1em; border-top: 1px solid #666; border-bottom: 1px solid #666; }
+        div.coverage-summary th { text-align: left; border: 1px solid #666; background: #eee; font-weight: normal; }
+        div.coverage-summary th.file { border-right: none !important; }
+        div.coverage-summary th.pic { border-left: none !important; text-align: right; }
+        div.coverage-summary th.pct { border-right: none !important; }
+        div.coverage-summary th.abs { border-left: none !important; text-align: right; }
+        div.coverage-summary td.pct { text-align: right; border-left: 1px solid #666; }
+        div.coverage-summary td.abs { text-align: right; font-size: 90%; color: #444; border-right: 1px solid #666; }
+        div.coverage-summary td.file { text-align: right; border-left: 1px solid #666; white-space: nowrap;  }
+        div.coverage-summary td.pic { min-width: 120px !important;  }
+        div.coverage-summary a:link { text-decoration: none; color: #000; }
+        div.coverage-summary a:visited { text-decoration: none; color: #333; }
+        div.coverage-summary a:hover { text-decoration: underline; }
+        div.coverage-summary tfoot td { border-top: 1px solid #666; }
+
+        div.coverage-summary .yui3-datatable-sort-indicator, div.coverage-summary .dummy-sort-indicator {
+            height: 10px;
+            width: 7px;
+            display: inline-block;
+            margin-left: 0.5em;
+        }
+        div.coverage-summary .yui3-datatable-sort-indicator {
+            background: url("https://yui-s.yahooapis.com/3.6.0/build/datatable-sort/assets/skins/sam/sort-arrow-sprite.png") no-repeat scroll 0 0 transparent;
+        }
+        div.coverage-summary .yui3-datatable-sorted .yui3-datatable-sort-indicator {
+            background-position: 0 -20px;
+        }
+        div.coverage-summary .yui3-datatable-sorted-desc .yui3-datatable-sort-indicator {
+            background-position: 0 -10px;
+        }
+
+        .high { background: #b5d592 !important; }
+        .medium { background: #ffe87c !important; }
+        .low { background: #fc8c84 !important; }
+
+        span.cover-fill, span.cover-empty {
+            display:inline-block;
+            border:1px solid #444;
+            background: white;
+            height: 12px;
+        }
+        span.cover-fill {
+            background: #ccc;
+            border-right: 1px solid #444;
+        }
+        span.cover-empty {
+            background: white;
+            border-left: none;
+        }
+        span.cover-full {
+            border-right: none !important;
+        }
+        pre.prettyprint {
+            border: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        .com { color: #999 !important; }
+        .ignore-none { color: #999; font-weight: normal; }
+
+    </style>
+</head>
+<body>
+<div class="header low">
+    <h1>Code coverage report for <span class="entity">drivers/serial.js</span></h1>
+    <h2>
+        
+        Statements: <span class="metric">36.36% <small>(60 / 165)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+        Branches: <span class="metric">19.35% <small>(12 / 62)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+        Functions: <span class="metric">23.81% <small>(10 / 42)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+        Lines: <span class="metric">37.58% <small>(59 / 157)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../index.html">All files</a> &#187; <a href="index.html">drivers/</a> &#187; serial.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366</td><td class="line-coverage"><span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">21</span>
+<span class="cline-any cline-yes">21</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">var events      = require('events'),
+	url         = require('url'),
+	util		= require('util'),
+	events      = require('eventemitter2'),
+	serialPort  = require('serialport'),
+	backOff     = require('backoff');
+&nbsp;
+/**
+ * Driver operational constants
+ * @type {Object} constants
+ */
+const DEFAULT_BAUD = 115200,
+	  // backoff type for retry of commands/connection
+	  BACKOFF_TYPE = 'fibonacci',
+	  // where to start timing out
+	  MIN_TIMEOUT  = 500;
+	  // when to give up
+	  MAX_TIMEOUT  = 2000;
+	  // maximum number of tries
+	  MAX_RETRY_COUNT = 10,
+	  // line timeout (time per line to allow)
+	  LINE_TIMEOUT = <span class="fstat-no" title="function not covered" >function calcLineTimeout(l) {</span> <span class="cstat-no" title="statement not covered" >return l * 100; </span>},
+	  // serial buffer size
+	  SERIAL_BUFFER_SIZE = 1024,
+	  // probe timeout
+	  PROBE_RESPONSE_TIMEOUT = 500,
+	  // probe command
+	  PROBE_COMMAND = '!',
+	  // probe regexp
+	  PROBE_REGEXP = /(?:\d*\.)?\d+/g;
+&nbsp;
+/**
+ * State events emitted during connection state changes. They can be monitored by attaching callbacks to the driver object: driver.on('state.disconnected', function() { .. });
+ * States are available on the SerialDriver object (i.e. SerialDriver.states.DISCONNECTED)
+ * @type {Object} observeable object
+ */
+const states = {
+	DISCONNECTED: [0, 'state.disconnected'],
+	CONNECTING:   [1, 'state.connecting'],
+	CONNECTED:    [2, 'state.connected'],
+	READY:        [3, 'state.ready'],
+	TRANSMITTING: [4, 'state.transmitting'],
+	RECEIVING:    [5, 'state.receiving'],
+	BACKOFF:      [6, 'state.retry']
+};
+/**
+ * SerialDriver object providing for stateful communication over a serial link. The SerialDriver provides support for command queuing, connection management, 
+ * and automatic backoff/retrying. It has been designed to provide a reliable connection to the vehicle during flight.
+ * @constructor
+ * @param {string} uri           A URI to connect to (optional)
+ */
+var SerialDriver = module.exports = function SerialDriver(uri) {
+	events.EventEmitter2.call(this, { wildcard: true });
+&nbsp;
+	this.queue = [], this.backOffs = [], this.foundPorts = [];
+&nbsp;
+	this.connection = {
+		state: states.DISCONNECTED[0],
+		driver: undefined,
+		uri: {}
+	};
+&nbsp;
+	if(uri) {
+		uri = url.parse(uri);
+&nbsp;
+		var self = this;
+		this.list(function checkURIByPortList(err, portList) {
+			<span class="missing-if-branch" title="else path not taken" >E</span>if(portList.filter(function(port) {
+				return port.name === uri.pathname ? true : <span class="branch-1 cbranch-no" title="branch not covered" >false;</span>
+			}).length) {
+				self.connection.uri = url.parse(portList.pop().uri);
+			} else {
+<span class="cstat-no" title="statement not covered" >				self.connection.uri = {};</span>
+			}
+		});
+	}
+&nbsp;
+	this.backOff = backOff[BACKOFF_TYPE]({
+		randomisationFactor: 0,
+		initialDelay: MIN_TIMEOUT,
+		maxDelay: MAX_TIMEOUT
+	});
+&nbsp;
+	this.backOff.on('backoff', <span class="fstat-no" title="function not covered" >function backOffLogger(number, delay) {</span>
+<span class="cstat-no" title="statement not covered" >    	self.backOffs.push([number, delay]);</span>
+	});
+	this.backOff.failAfter(MAX_RETRY_COUNT);
+&nbsp;
+	this.backOff.on('fail', <span class="fstat-no" title="function not covered" >function onBackOffFail() {</span>
+<span class="cstat-no" title="statement not covered" >		self.backOff.reset();</span>
+<span class="cstat-no" title="statement not covered" >    	self.connection.state = states.DISCONNECTED[0];</span>
+<span class="cstat-no" title="statement not covered" >    	self.connection.driver = undefined;</span>
+<span class="cstat-no" title="statement not covered" >    	self.emit(states.DISCONNECTED[1]);</span>
+	});
+&nbsp;
+	this.on('pong', <span class="fstat-no" title="function not covered" >function onPortPong(port) {</span>
+<span class="cstat-no" title="statement not covered" >		this.foundPorts.push(port);</span>
+	});
+	
+	Array.observe(this.queue, <span class="fstat-no" title="function not covered" >function observeQueueEvents(events) {</span>
+<span class="cstat-no" title="statement not covered" >		try {</span>
+<span class="cstat-no" title="statement not covered" >			self.backOff.backoff();</span>
+		} catch(e) {}
+<span class="cstat-no" title="statement not covered" >	    self.connection.state = states.BACKOFF[0];</span>
+<span class="cstat-no" title="statement not covered" >		self.emit(states.BACKOFF[1]);</span>
+<span class="cstat-no" title="statement not covered" >		var item;</span>
+<span class="cstat-no" title="statement not covered" >		while(item = self.queue.shift()) {</span>
+<span class="cstat-no" title="statement not covered" >			(<span class="fstat-no" title="function not covered" >function applyBackOff(item) {</span></span>
+<span class="cstat-no" title="statement not covered" >				self.backOff.once('ready', <span class="fstat-no" title="function not covered" >function onceBackoffReady() {</span></span>
+<span class="cstat-no" title="statement not covered" >					self.connection.state = states.READY[0];</span>
+<span class="cstat-no" title="statement not covered" >					self.send.apply(self, item);</span>
+				});
+			}(item));
+		}
+	});
+&nbsp;
+	//setInterval(function pollConnectionState() {
+	//	console.log(self.connection.state, self.queue);
+	//}, 2000);
+};
+util.inherits(SerialDriver, events.EventEmitter2);
+SerialDriver.prototype.name = 'SerialDriver';
+SerialDriver.states = {};
+var stateIntegerMapping = {};
+Object.keys(states).forEach(function(key) {
+	SerialDriver.states[key] = states[key][1];
+	stateIntegerMapping[states[key][0]] = states[key][1];
+});
+&nbsp;
+&nbsp;
+/**
+ * Connect to the port
+ * @param {String}   uri uri to connect (optional)
+ * @param {Function} cb
+ */
+SerialDriver.prototype.connect = function connect(uri, cb) {
+	var self = this;
+	// use stored uri if there is one
+	var uri = uri ? url.parse(uri) : (this.connection.uri ? this.connection.uri : <span class="branch-1 cbranch-no" title="branch not covered" >undefined)</span>;
+	<span class="missing-if-branch" title="if path not taken" >I</span>if (uri === undefined) {
+<span class="cstat-no" title="statement not covered" >		cb.call(this, 'No URI available', undefined);</span>
+<span class="cstat-no" title="statement not covered" >		return;</span>
+	}
+&nbsp;
+	this.connection.state = states.CONNECTING[0];
+	this.emit(states.CONNECTING[1]);
+	_connect(uri, function attemptConnect(err, driver) {
+		if(!err) {
+			self.connection = {
+				state: states.CONNECTED[0],
+				driver: driver,
+				uri: uri
+			};
+			self.emit(states.CONNECTED[1], uri);
+			cb.call(self, undefined, uri);
+		} else {
+			self.connection = states.DISCONNECTED[0];
+			self.emit(states.DISCONNECTED[1], err);
+			cb.call(self, err);
+		}
+	});
+};
+/**
+ * Disconnect from the port if a connection is currently established
+ * @param {Function} cb
+ */
+SerialDriver.prototype.disconnect = <span class="fstat-no" title="function not covered" >function disconnect(cb) {</span>
+<span class="cstat-no" title="statement not covered" >	if(this.connection.driver) <span class="cstat-no" title="statement not covered" >this.connection.driver.close(cb.call(this));</span></span>
+<span class="cstat-no" title="statement not covered" >	this.connection.state = states.DISCONNECTED[0];</span>
+<span class="cstat-no" title="statement not covered" >	this.emit(states.DISCONNECTED[1]);</span>
+};
+/**
+ * List available ports found on the system
+ * @param {Function} cb
+ * @return {Array} array of objects describing type, driver, name, uri, and any extra information found during scan
+ */
+SerialDriver.prototype.list = <span class="fstat-no" title="function not covered" >function list(cb) {</span>
+<span class="cstat-no" title="statement not covered" >	var self = this;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >	serialPort.list(<span class="fstat-no" title="function not covered" >function createPortList(err, ports) {</span></span>
+<span class="cstat-no" title="statement not covered" >  		if(!err) {</span>
+<span class="cstat-no" title="statement not covered" >  			this.portList = </span>
+  				ports.map(<span class="fstat-no" title="function not covered" >function mapPort(port) {</span>
+<span class="cstat-no" title="statement not covered" >  					var extra = [];</span>
+<span class="cstat-no" title="statement not covered" >  					if(port.pnpId != undefined) <span class="cstat-no" title="statement not covered" >extra.push(['Plug&amp;Play ID', port.pnpId]);</span></span>
+<span class="cstat-no" title="statement not covered" >  					if(port.manufacture != undefined) <span class="cstat-no" title="statement not covered" >extra.push(['Manufacturer', port.manufacture]);</span></span>
+<span class="cstat-no" title="statement not covered" >  					return {</span>
+  						type: 'Serial Port',
+  						driver: self,
+  						name: port.comName,
+  						extra: extra,
+  						uri: 'serial://' + DEFAULT_BAUD + '@' + port.comName
+  					};
+  				});
+<span class="cstat-no" title="statement not covered" >  			cb.call(self, undefined, portList);</span>
+  		} else {
+<span class="cstat-no" title="statement not covered" >  			cb.call(self, err);</span>
+  		}
+	});
+};
+/**
+ * Probes for possible vehicles on ports, optionally connecting based upon heuristic
+ * @param {Function} probeResultsCb callback to receive results of probe once timeouts have expired
+ * @param {Function} alsoConnectCb if a callback is specified, connect to first found vehicle during port probing and callback
+ */
+SerialDriver.prototype.probe = <span class="fstat-no" title="function not covered" >function probe(probeResultsCb, alsoConnectCb) {</span>
+<span class="cstat-no" title="statement not covered" >	var self = this;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >	if(alsoConnectCb) {</span>
+<span class="cstat-no" title="statement not covered" >		this.once('pong', <span class="fstat-no" title="function not covered" >function connectOnPong(port) {</span></span>
+<span class="cstat-no" title="statement not covered" >			self.connect(port.uri, <span class="fstat-no" title="function not covered" >function autoConnectErrorCb(err) {</span></span>
+<span class="cstat-no" title="statement not covered" >				alsoConnectCb.call(self, err, port);</span>
+			});
+		});
+	}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >	var found = [];</span>
+<span class="cstat-no" title="statement not covered" >	this.list(<span class="fstat-no" title="function not covered" >function probePortList(err, ports) {</span></span>
+<span class="cstat-no" title="statement not covered" >		ports.forEach(<span class="fstat-no" title="function not covered" >function probePort(port) {</span></span>
+			// if we're already connected to this uri, don't probe it
+<span class="cstat-no" title="statement not covered" >			if(self.connection.state &gt; 0 &amp;&amp; self.connection.uri.port === port.uri) <span class="cstat-no" title="statement not covered" >return;</span></span>
+<span class="cstat-no" title="statement not covered" >			_connect(port.uri, <span class="fstat-no" title="function not covered" >function portProbeErrorCb(err, driver) {</span></span>
+<span class="cstat-no" title="statement not covered" >				if(!err) {</span>
+<span class="cstat-no" title="statement not covered" >					(<span class="fstat-no" title="function not covered" >function portConnectClosure(port) {</span></span>
+<span class="cstat-no" title="statement not covered" >						driver.once('data', <span class="fstat-no" title="function not covered" >function(buff) {</span></span>
+<span class="cstat-no" title="statement not covered" >							var data = buff.toString('utf8');</span>
+<span class="cstat-no" title="statement not covered" >							if(data.match(PROBE_REGEXP)) {</span>
+<span class="cstat-no" title="statement not covered" >								found.push(port);</span>
+<span class="cstat-no" title="statement not covered" >								self.emit('pong', port);</span>
+							}
+						});
+<span class="cstat-no" title="statement not covered" >						(<span class="fstat-no" title="function not covered" >function(port) {</span></span>
+<span class="cstat-no" title="statement not covered" >							port.timeout = setTimeout(<span class="fstat-no" title="function not covered" >function portProbeTimeout() {</span></span>
+<span class="cstat-no" title="statement not covered" >								driver.close();</span>
+<span class="cstat-no" title="statement not covered" >								port.timeout = undefined;</span>
+<span class="cstat-no" title="statement not covered" >								if(ports.every(<span class="fstat-no" title="function not covered" >function(triedPort) {</span></span>
+<span class="cstat-no" title="statement not covered" >									return triedPort.timeout === undefined ? true : false;</span>
+								})) {
+<span class="cstat-no" title="statement not covered" >									if(probeResultsCb) <span class="cstat-no" title="statement not covered" >probeResultsCb.call(self, found);</span></span>
+								}
+							}, PROBE_RESPONSE_TIMEOUT);
+						}(port));
+<span class="cstat-no" title="statement not covered" >						_send(PROBE_COMMAND, driver);</span>
+					}(port));			
+				} else {
+					// TODO: do something with this error...
+					//console.log('error connecting on probe', port.name, err);
+				}
+			});
+		});
+	});
+};
+/**
+ * Sends string data to the vehicle
+ * @param {String} data String data to send
+ * @param {Integer} lineCount number of response lines to expect (0 for no response expected)
+ * @param {Function} cb called when all lines have been received
+ */
+SerialDriver.prototype.send = <span class="fstat-no" title="function not covered" >function send(data, lineCount, cb) {</span>
+<span class="cstat-no" title="statement not covered" >	var self = this;</span>
+<span class="cstat-no" title="statement not covered" >	if(this.connection.state === states.CONNECTED[0] || this.connection.state === states.READY[0]) {</span>
+<span class="cstat-no" title="statement not covered" >		this.connection.state = states.TRANSMITTING[0];</span>
+<span class="cstat-no" title="statement not covered" >		this.emit(states.TRANSMITTING[1], data);</span>
+<span class="cstat-no" title="statement not covered" >		if(lineCount &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >			var lines = [];</span>
+<span class="cstat-no" title="statement not covered" >			var dataCb = <span class="fstat-no" title="function not covered" >function dataLineCb(line) {</span></span>
+<span class="cstat-no" title="statement not covered" >				lines.push(line);</span>
+<span class="cstat-no" title="statement not covered" >				if(lines.length === lineCount) {</span>
+<span class="cstat-no" title="statement not covered" >					clearTimeout(lineTimeout);</span>
+<span class="cstat-no" title="statement not covered" >					self.connection.driver.removeListener('data', dataCb);</span>
+<span class="cstat-no" title="statement not covered" >					self.connection.state = states.READY[0];</span>
+<span class="cstat-no" title="statement not covered" >					self.emit(states.READY[1]);</span>
+<span class="cstat-no" title="statement not covered" >					cb.call(self, data, lines.join("\n"));</span>
+				}
+			};
+<span class="cstat-no" title="statement not covered" >			this.connection.driver.on('data', dataCb);</span>
+<span class="cstat-no" title="statement not covered" >			var lineTimeout = setTimeout(<span class="fstat-no" title="function not covered" >function lineTimeout() {</span></span>
+				// command did not return expected number of lines, return to ready, backoff &amp; retry
+<span class="cstat-no" title="statement not covered" >				self.connection.driver.removeListener('data', dataCb);</span>
+<span class="cstat-no" title="statement not covered" >				self.connection.state = states.READY[0];</span>
+<span class="cstat-no" title="statement not covered" >				self.emit(states.READY[1]);</span>
+				// line timeout
+<span class="cstat-no" title="statement not covered" >				if((lines.length &lt; lineCount) &amp;&amp; cb) <span class="cstat-no" title="statement not covered" >self.queue.push([data, lineCount, cb]); </span></span>
+			}, LINE_TIMEOUT(lineCount));
+		}
+<span class="cstat-no" title="statement not covered" >		_send(data, this.connection.driver, <span class="fstat-no" title="function not covered" >function sendErrorCb(err) {</span></span>
+<span class="cstat-no" title="statement not covered" >			if(!err) {</span>
+				// if we don't have to wait for any data, move back to connected, otherwise
+				// we need to wait for data and should not be transmitting
+<span class="cstat-no" title="statement not covered" >				if(lineCount &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >					self.connection.state = states.RECEIVING[0];</span>
+<span class="cstat-no" title="statement not covered" >					self.emit(states.RECEIVING[1]);</span>
+				} else <span class="cstat-no" title="statement not covered" >if(cb) {</span>
+<span class="cstat-no" title="statement not covered" >					self.connection.state = states.READY[0];</span>
+<span class="cstat-no" title="statement not covered" >					self.emit(states.READY[1]);</span>
+<span class="cstat-no" title="statement not covered" >					cb.call(self);</span>
+				} else {
+<span class="cstat-no" title="statement not covered" >					self.connection.state = states.READY[0];</span>
+<span class="cstat-no" title="statement not covered" >					self.emit(states.READY[1]);</span>
+				}
+			} else {
+				// if there was some kind of error sending, push into send-queue for retry or failure
+<span class="cstat-no" title="statement not covered" >				if(cb) <span class="cstat-no" title="statement not covered" >self.queue.push([data, lineCount, cb]);</span></span>
+			}
+		});
+	} else {
+<span class="cstat-no" title="statement not covered" >		this.queue.push([data, lineCount, cb]);</span>
+	}
+};
+&nbsp;
+/**
+ * Gets the current state of the driver interface
+ * @return {String} one of SerialDriver.states
+ */
+SerialDriver.prototype.getState = function getState() {
+	return stateIntegerMapping[this.connection.state];
+};
+&nbsp;
+/**
+ * Get raw streaming interface of underlying system driver
+ * @return {Object} stream compatible instance of driver
+ */
+SerialDriver.prototype.getStream = <span class="fstat-no" title="function not covered" >function getStream() {</span>
+<span class="cstat-no" title="statement not covered" >	return this.connection.driver;</span>
+};
+&nbsp;
+/**
+ * -
+ *
+ * @ignore
+ */
+function _connect(uri, cb) {
+	var self = this,
+		uri  = uri;
+	
+	var driver = new serialPort.SerialPort(uri.pathname, {
+		baudrate: uri.auth,
+		parser: serialPort.parsers.readline("\n"),
+		buffersize: SERIAL_BUFFER_SIZE
+	}, false, undefined);
+&nbsp;
+	driver.on('open', function driverOpenCb() {
+		cb.call(self, undefined, driver);
+	});
+&nbsp;
+	driver.on('error', <span class="fstat-no" title="function not covered" >function driverErrorCb() {</span>
+		// TODO: error handling
+	});
+&nbsp;
+	driver.open(function driverOpenErrorCb(err) {
+		if(err) cb.call(driver, err);
+	});
+}
+&nbsp;
+<span class="fstat-no" title="function not covered" >function _send(data, driver, cb) {</span>
+<span class="cstat-no" title="statement not covered" >	var self = this;</span>
+<span class="cstat-no" title="statement not covered" >	driver.write(data, <span class="fstat-no" title="function not covered" >function driverWriteErrorCb(err) {</span></span>
+<span class="cstat-no" title="statement not covered" >		if(cb) {</span>
+<span class="cstat-no" title="statement not covered" >			driver.drain(<span class="fstat-no" title="function not covered" >function driverDrainCb() {</span></span>
+<span class="cstat-no" title="statement not covered" >				cb.call(self);</span>
+			});
+		} else {
+<span class="cstat-no" title="statement not covered" >			driver.drain(<span class="fstat-no" title="function not covered" >function emptyDriverDrainDb() {</span>});</span>
+		}
+	});
+}</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Sep 23 2014 04:57:39 GMT-0700 (PDT)</div>
+</div>
+
+<script src="../prettify.js"></script>
+
+<script src="https://yui-s.yahooapis.com/3.6.0/build/yui/yui-min.js"></script>
+<script>
+
+    YUI().use('datatable', function (Y) {
+
+        var formatters = {
+          pct: function (o) {
+              o.className += o.record.get('classes')[o.column.key];
+              try {
+                  return o.value.toFixed(2) + '%';
+              } catch (ex) { return o.value + '%'; }
+          },
+          html: function (o) {
+              o.className += o.record.get('classes')[o.column.key];
+              return o.record.get(o.column.key + '_html');
+          }
+        },
+          defaultFormatter = function (o) {
+              o.className += o.record.get('classes')[o.column.key];
+              return o.value;
+          };
+
+        function getColumns(theadNode) {
+            var colNodes = theadNode.all('tr th'),
+                cols = [],
+                col;
+            colNodes.each(function (colNode) {
+                col = {
+                    key: colNode.getAttribute('data-col'),
+                    label: colNode.get('innerHTML') || ' ',
+                    sortable: !colNode.getAttribute('data-nosort'),
+                    className: colNode.getAttribute('class'),
+                    type: colNode.getAttribute('data-type'),
+                    allowHTML: colNode.getAttribute('data-html') === 'true' || colNode.getAttribute('data-fmt') === 'html'
+                };
+                col.formatter = formatters[colNode.getAttribute('data-fmt')] || defaultFormatter;
+                cols.push(col);
+            });
+            return cols;
+        }
+
+        function getRowData(trNode, cols) {
+            var tdNodes = trNode.all('td'),
+                    i,
+                    row = { classes: {} },
+                    node,
+                    name;
+            for (i = 0; i < cols.length; i += 1) {
+                name = cols[i].key;
+                node = tdNodes.item(i);
+                row[name] = node.getAttribute('data-value') || node.get('innerHTML');
+                row[name + '_html'] = node.get('innerHTML');
+                row.classes[name] = node.getAttribute('class');
+                //Y.log('Name: ' + name + '; Value: ' + row[name]);
+                if (cols[i].type === 'number') { row[name] = row[name] * 1; }
+            }
+            //Y.log(row);
+            return row;
+        }
+
+        function getData(tbodyNode, cols) {
+            var data = [];
+            tbodyNode.all('tr').each(function (trNode) {
+                data.push(getRowData(trNode, cols));
+            });
+            return data;
+        }
+
+        function replaceTable(node) {
+            if (!node) { return; }
+            var cols = getColumns(node.one('thead')),
+                data = getData(node.one('tbody'), cols),
+                table,
+                parent = node.get('parentNode');
+
+            table = new Y.DataTable({
+                columns: cols,
+                data: data,
+                sortBy: 'file'
+            });
+            parent.set('innerHTML', '');
+            table.render(parent);
+        }
+
+        Y.on('domready', function () {
+            replaceTable(Y.one('div.coverage-summary table'));
+            if (typeof prettyPrint === 'function') {
+                prettyPrint();
+            }
+        });
+    });
+</script>
+</body>
+</html>

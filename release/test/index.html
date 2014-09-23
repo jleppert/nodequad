@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Bootstrap</title>
+    <link type="text/css" rel="stylesheet" href="assets/css/bootstrap.css"/>
+    <style>
+      body {
+        background: url('assets/img/textured_paper.png') repeat top left;
+        background-color: #f6f6f6;
+      }
+      .main {
+        padding: 0px 40px;
+        background: rgba(255,255,255,0.5);
+        -webkit-box-shadow: 0 0 20px #d2d2d2;
+        box-shadow: 0 0 20px #d2d2d2;
+      }
+      .container {
+        width: 1100px;
+      }
+      .nav-list {
+        font-size: 17px;
+      }
+      .nav-header {
+        font-size: 17px;
+        text-transform: none;
+        line-height: 30px;
+      }
+    </style>
+    <link type="text/css" rel="stylesheet" href="assets/css/bootstrap-responsive.css"/>
+    <style>/*
+
+Intellij Idea-like styling (c) Vasily Polovnyov <vast@whiteants.net>
+
+*/
+
+.hljs {
+  display: block; padding: 0.5em;
+  color: #000;
+  background: #fff;
+}
+
+.hljs-subst,
+.hljs-title {
+  font-weight: normal;
+  color: #000;
+}
+
+.hljs-comment,
+.hljs-template_comment,
+.hljs-javadoc,
+.diff .hljs-header {
+  color: #808080;
+  font-style: italic;
+}
+
+.hljs-annotation,
+.hljs-decorator,
+.hljs-preprocessor,
+.hljs-pragma,
+.hljs-doctype,
+.hljs-pi,
+.hljs-chunk,
+.hljs-shebang,
+.apache .hljs-cbracket,
+.hljs-prompt,
+.http .hljs-title {
+  color: #808000;
+}
+
+.hljs-tag,
+.hljs-pi {
+  background: #efefef;
+}
+
+.hljs-tag .hljs-title,
+.hljs-id,
+.hljs-attr_selector,
+.hljs-pseudo,
+.hljs-literal,
+.hljs-keyword,
+.hljs-hexcolor,
+.css .hljs-function,
+.ini .hljs-title,
+.css .hljs-class,
+.hljs-list .hljs-title,
+.clojure .hljs-title,
+.nginx .hljs-title,
+.tex .hljs-command,
+.hljs-request,
+.hljs-status {
+  font-weight: bold;
+  color: #000080;
+}
+
+.hljs-attribute,
+.hljs-rules .hljs-keyword,
+.hljs-number,
+.hljs-date,
+.hljs-regexp,
+.tex .hljs-special {
+  font-weight: bold;
+  color: #0000ff;
+}
+
+.hljs-number,
+.hljs-regexp {
+  font-weight: normal;
+}
+
+.hljs-string,
+.hljs-value,
+.hljs-filter .hljs-argument,
+.css .hljs-function .hljs-params,
+.apache .hljs-tag {
+  color: #008000;
+  font-weight: bold;
+}
+
+.hljs-symbol,
+.ruby .hljs-symbol .hljs-string,
+.hljs-char,
+.tex .hljs-formula {
+  color: #000;
+  background: #d0eded;
+  font-style: italic;
+}
+
+.hljs-phpdoc,
+.hljs-yardoctag,
+.hljs-javadoctag {
+  text-decoration: underline;
+}
+
+.hljs-variable,
+.hljs-envvar,
+.apache .hljs-sqbracket,
+.nginx .hljs-built_in {
+  color: #660e7a;
+}
+
+.hljs-addition {
+  background: #baeeba;
+}
+
+.hljs-deletion {
+  background: #ffc8bd;
+}
+
+.diff .hljs-change {
+  background: #bccff9;
+}
+</style>
+  </head>
+<body>
+
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="span3">
+        <ul class="nav nav-list"><li><a href="#toc">TOC</a></li><li><a href="#lib_drivers_serial_js">lib/drivers/serial.js</a></li><li><a href="#object">object</a></li><li><a href="#constructor">constructor</a></li><li><a href="#without_a_uri">without a uri</a></li><li><a href="#with_a_uri">with a uri</a></li><li><a href="#_connect">.connect</a></li><li><a href="#without_a_uri">without a uri</a></li><li><a href="#with_a_uri">with a uri</a></li></ul>
+      </div>
+      <div class="span9 main">
+        <a name="toc"></a><h1>TOC<a class="anchorlink" href="#toc"></a></h1>
+<ul class="list">
+<li><a href="#libdriversserialjs">lib/drivers/serial.js</a><ul class="list">
+<li><a href="#libdriversserialjs-object">object</a></li>
+<li><a href="#libdriversserialjs-object">object</a><ul class="list">
+<li><a href="#libdriversserialjs-constructor-without-a-uri">without a uri</a></li>
+<li><a href="#libdriversserialjs-constructor-with-a-uri">with a uri</a></li>
+</ul>
+</li>
+<li><a href="#libdriversserialjs-connect">.connect</a><ul class="list">
+<li><a href="#libdriversserialjs-connect-without-a-uri">without a uri</a></li>
+<li><a href="#libdriversserialjs-connect-with-a-uri">with a uri</a></li>
+</ul>
+</li>
+<li><a href="#libdriversserialjs-disconnect">.disconnect</a></li>
+<li><a href="#libdriversserialjs-list">.list</a></li>
+<li><a href="#libdriversserialjs-probe">.probe</a></li>
+<li><a href="#libdriversserialjs-send">.send</a></li>
+<li><a href="#libdriversserialjs-getstream">.getStream</a>
+<a name=""></a></li>
+</ul>
+</li>
+</ul>
+<p><a name="libdriversserialjs"></a></p>
+<a name="lib_drivers_serial_js"></a><h1>lib/drivers/serial.js<a class="anchorlink" href="#lib_drivers_serial_js"></a></h1>
+<p><a name="libdriversserialjs-object"></a></p>
+<a name="object"></a><h2>object<a class="anchorlink" href="#object"></a></h2>
+<p>should implement eventemitter.</p>
+<pre class="hljs"><code>assert<span class="hljs-preprocessor">.equal</span>(SerialDriver<span class="hljs-preprocessor">.super</span>_, EventEmitter)<span class="hljs-comment">;</span></code></pre><p>should expose states.</p>
+<pre class="hljs"><code><span class="hljs-keyword">assert</span>.deepProperty(SerialDriver, <span class="hljs-string">&#39;states.DISCONNECTED&#39;</span>);
+<span class="hljs-keyword">assert</span>.deepProperty(SerialDriver, <span class="hljs-string">&#39;states.CONNECTING&#39;</span>);
+<span class="hljs-keyword">assert</span>.deepProperty(SerialDriver, <span class="hljs-string">&#39;states.CONNECTED&#39;</span>);
+<span class="hljs-keyword">assert</span>.deepProperty(SerialDriver, <span class="hljs-string">&#39;states.READY&#39;</span>);
+<span class="hljs-keyword">assert</span>.deepProperty(SerialDriver, <span class="hljs-string">&#39;states.TRANSMITTING&#39;</span>);
+<span class="hljs-keyword">assert</span>.deepProperty(SerialDriver, <span class="hljs-string">&#39;states.RECEIVING&#39;</span>);
+<span class="hljs-keyword">assert</span>.deepProperty(SerialDriver, <span class="hljs-string">&#39;states.BACKOFF&#39;</span>);</code></pre><p><a name="libdriversserialjs-constructor"></a></p>
+<a name="constructor"></a><h2>constructor<a class="anchorlink" href="#constructor"></a></h2>
+<p><a name="libdriversserialjs-constructor-without-a-uri"></a></p>
+<a name="without_a_uri"></a><h3>without a uri<a class="anchorlink" href="#without_a_uri"></a></h3>
+<p>should construct a SerialDriver.</p>
+<pre class="hljs"><code><span class="hljs-keyword">assert</span>.ok(driver <span class="hljs-keyword">instanceof</span> SerialDriver);</code></pre><p>should start in a disconnected state without a driver and empty uri .</p>
+<pre class="hljs"><code>assert<span class="hljs-preprocessor">.equal</span>(driver<span class="hljs-preprocessor">.getState</span>(), SerialDriver<span class="hljs-preprocessor">.states</span><span class="hljs-preprocessor">.DISCONNECTED</span>)<span class="hljs-comment">;</span>
+assert<span class="hljs-preprocessor">.isUndefined</span>(driver<span class="hljs-preprocessor">.connection</span><span class="hljs-preprocessor">.driver</span>)<span class="hljs-comment">;</span>
+assert<span class="hljs-preprocessor">.deepEqual</span>(driver<span class="hljs-preprocessor">.connection</span><span class="hljs-preprocessor">.uri</span>, {})<span class="hljs-comment">;</span></code></pre><p>should start with an empty queue, backoffs, and discovered ports.</p>
+<pre class="hljs"><code>assert<span class="hljs-preprocessor">.deepEqual</span>(driver<span class="hljs-preprocessor">.queue</span>, [])<span class="hljs-comment">;</span>
+assert<span class="hljs-preprocessor">.deepEqual</span>(driver<span class="hljs-preprocessor">.backOffs</span>, [])<span class="hljs-comment">;</span>
+assert<span class="hljs-preprocessor">.deepEqual</span>(driver<span class="hljs-preprocessor">.foundPorts</span>, [])<span class="hljs-comment">;</span></code></pre><p>should have a backoff listener.</p>
+<pre class="hljs"><code>assert<span class="hljs-preprocessor">.isFunction</span>(driver<span class="hljs-preprocessor">.backOff</span><span class="hljs-preprocessor">.handlers</span><span class="hljs-preprocessor">.backoff</span>)<span class="hljs-comment">;</span></code></pre><p><a name="libdriversserialjs-constructor-with-a-uri"></a></p>
+<a name="with_a_uri"></a><h3>with a uri<a class="anchorlink" href="#with_a_uri"></a></h3>
+<p>should accept a uri that is available.</p>
+<pre class="hljs"><code><span class="hljs-keyword">var</span>    oldList = SerialDriver.prototype.<span class="hljs-keyword">list</span>;
+<span class="hljs-keyword">if</span>(MOCK) SerialDriver.prototype = mockList(SerialDriver.prototype);
+<span class="hljs-keyword">var</span> driver = <span class="hljs-keyword">new</span> SerialDriver(URI);
+<span class="hljs-keyword">var</span> url = <span class="hljs-keyword">require</span>(<span class="hljs-string">&#39;url&#39;</span>); 
+assert.deepEqual(driver.connection.uri, url.parse(URI));
+<span class="hljs-keyword">if</span>(MOCK) SerialDriver.prototype.<span class="hljs-keyword">list</span> = oldList;</code></pre><p>should construct a SerialDriver.</p>
+<pre class="hljs"><code><span class="hljs-keyword">assert</span>.ok(driver <span class="hljs-keyword">instanceof</span> SerialDriver);</code></pre><p>should start in a disconnected state without a driver and empty uri .</p>
+<pre class="hljs"><code>assert<span class="hljs-preprocessor">.equal</span>(driver<span class="hljs-preprocessor">.getState</span>(), SerialDriver<span class="hljs-preprocessor">.states</span><span class="hljs-preprocessor">.DISCONNECTED</span>)<span class="hljs-comment">;</span>
+assert<span class="hljs-preprocessor">.isUndefined</span>(driver<span class="hljs-preprocessor">.connection</span><span class="hljs-preprocessor">.driver</span>)<span class="hljs-comment">;</span>
+assert<span class="hljs-preprocessor">.deepEqual</span>(driver<span class="hljs-preprocessor">.connection</span><span class="hljs-preprocessor">.uri</span>, {})<span class="hljs-comment">;</span></code></pre><p>should start with an empty queue, backoffs, and discovered ports.</p>
+<pre class="hljs"><code>assert<span class="hljs-preprocessor">.deepEqual</span>(driver<span class="hljs-preprocessor">.queue</span>, [])<span class="hljs-comment">;</span>
+assert<span class="hljs-preprocessor">.deepEqual</span>(driver<span class="hljs-preprocessor">.backOffs</span>, [])<span class="hljs-comment">;</span>
+assert<span class="hljs-preprocessor">.deepEqual</span>(driver<span class="hljs-preprocessor">.foundPorts</span>, [])<span class="hljs-comment">;</span></code></pre><p>should have a backoff listener.</p>
+<pre class="hljs"><code>assert<span class="hljs-preprocessor">.isFunction</span>(driver<span class="hljs-preprocessor">.backOff</span><span class="hljs-preprocessor">.handlers</span><span class="hljs-preprocessor">.backoff</span>)<span class="hljs-comment">;</span></code></pre><p><a name="libdriversserialjs-connect"></a></p>
+<a name="_connect"></a><h2>.connect<a class="anchorlink" href="#_connect"></a></h2>
+<p><a name="libdriversserialjs-connect-without-a-uri"></a></p>
+<a name="without_a_uri"></a><h3>without a uri<a class="anchorlink" href="#without_a_uri"></a></h3>
+<p>uses the uri attached to the instance.</p>
+<pre class="hljs"><code>var driver = <span class="hljs-keyword">new</span> Driver(URI);
+    cb        = sinon.spy();
+driver.connect(undefined, cb);
+<span class="hljs-keyword">assert</span>.ok(cb.calledOnce);
+<span class="hljs-keyword">assert</span>.ok(cb.neverCalledWith(<span class="hljs-string">&#39;No URI available&#39;</span>));
+<span class="hljs-keyword">assert</span>.ok(cb.calledWith(undefined, url.parse(URI)));
+<span class="hljs-keyword">assert</span>.ok(cb.calledOn(driver));
+<span class="hljs-keyword">assert</span>.deepEqual(driver.connection.uri, url.parse(URI));</code></pre><p>transitions state: connecting -&gt; connected on successful connection.</p>
+<pre class="hljs"><code>var driver = new Driver(URI),
+    connectingSpy = sinon<span class="hljs-preprocessor">.spy</span>(),
+    connectedSpy  = sinon<span class="hljs-preprocessor">.spy</span>()<span class="hljs-comment">;</span>
+driver<span class="hljs-preprocessor">.on</span>(Driver<span class="hljs-preprocessor">.states</span><span class="hljs-preprocessor">.CONNECTING</span>, connectingSpy)<span class="hljs-comment">;</span>
+driver<span class="hljs-preprocessor">.on</span>(Driver<span class="hljs-preprocessor">.states</span><span class="hljs-preprocessor">.CONNECTED</span>, connectedSpy)<span class="hljs-comment">;</span>
+driver<span class="hljs-preprocessor">.connect</span>(undefined, cb)<span class="hljs-comment">;</span>
+assert<span class="hljs-preprocessor">.ok</span>(connectingSpy<span class="hljs-preprocessor">.calledOnce</span>)<span class="hljs-comment">;</span>
+assert<span class="hljs-preprocessor">.ok</span>(connectedSpy<span class="hljs-preprocessor">.calledOnce</span>)<span class="hljs-comment">;</span>
+assert<span class="hljs-preprocessor">.ok</span>(connectingSpy<span class="hljs-preprocessor">.calledBefore</span>(connectedSpy))<span class="hljs-comment">;</span>
+assert<span class="hljs-preprocessor">.ok</span>(connectedSpy<span class="hljs-preprocessor">.calledAfter</span>(connectingSpy))<span class="hljs-comment">;</span></code></pre><p>transitions state: connecting -&gt; disconnected on unsuccessful connection.</p>
+<pre class="hljs"><code>var oldMock = Driver.<strong>get</strong>(<span class="hljs-attribute">&#39;serialPort</span>&#39;);
+Driver.<strong>set</strong>(<span class="hljs-attribute">&#39;serialPort</span>&#39;, serialPortMock(true));
+var driver = <span class="hljs-keyword">new</span> Driver(URI),
+    connectingSpy   = sinon.spy(),
+    connectedSpy    = sinon.spy(),
+    disconnectedSpy = sinon.spy();
+driver.<span class="hljs-keyword">on</span>(Driver.states.CONNECTING, connectingSpy);
+driver.<span class="hljs-keyword">on</span>(Driver.states.CONNECTED, connectedSpy);
+driver.<span class="hljs-keyword">on</span>(Driver.states.DISCONNECTED, disconnectedSpy);
+driver.connect(undefined, cb);
+<span class="hljs-keyword">assert</span>.ok(connectingSpy.calledOnce);
+<span class="hljs-keyword">assert</span>.ok(disconnectedSpy.calledOnce);
+<span class="hljs-keyword">assert</span>.ok(!connectedSpy.called);
+<span class="hljs-keyword">assert</span>.ok(connectingSpy.calledBefore(disconnectedSpy));
+<span class="hljs-keyword">assert</span>.ok(disconnectedSpy.calledAfter(connectingSpy));
+Driver.<strong>set</strong>(<span class="hljs-attribute">&#39;serialPort</span>&#39;, oldMock);</code></pre><p><a name="libdriversserialjs-connect-with-a-uri"></a></p>
+<a name="with_a_uri"></a><h3>with a uri<a class="anchorlink" href="#with_a_uri"></a></h3>
+<p>uses the provided uri.</p>
+<pre class="hljs"><code>var driver = <span class="hljs-keyword">new</span> Driver(undefined);
+    cb     = sinon.spy();
+driver.connect(URI, cb);
+<span class="hljs-keyword">assert</span>.ok(cb.calledOnce);
+<span class="hljs-keyword">assert</span>.ok(cb.neverCalledWith(<span class="hljs-string">&#39;No URI available&#39;</span>));
+<span class="hljs-keyword">assert</span>.ok(cb.calledWith(undefined, url.parse(URI)));
+<span class="hljs-keyword">assert</span>.ok(cb.calledOn(driver));
+<span class="hljs-keyword">assert</span>.deepEqual(driver.connection.uri, url.parse(URI));</code></pre><p>transitions state: connecting -&gt; connected on successful connection.</p>
+<pre class="hljs"><code>var driver = new Driver(URI),
+    connectingSpy = sinon<span class="hljs-preprocessor">.spy</span>(),
+    connectedSpy  = sinon<span class="hljs-preprocessor">.spy</span>()<span class="hljs-comment">;</span>
+driver<span class="hljs-preprocessor">.on</span>(Driver<span class="hljs-preprocessor">.states</span><span class="hljs-preprocessor">.CONNECTING</span>, connectingSpy)<span class="hljs-comment">;</span>
+driver<span class="hljs-preprocessor">.on</span>(Driver<span class="hljs-preprocessor">.states</span><span class="hljs-preprocessor">.CONNECTED</span>, connectedSpy)<span class="hljs-comment">;</span>
+driver<span class="hljs-preprocessor">.connect</span>(undefined, cb)<span class="hljs-comment">;</span>
+assert<span class="hljs-preprocessor">.ok</span>(connectingSpy<span class="hljs-preprocessor">.calledOnce</span>)<span class="hljs-comment">;</span>
+assert<span class="hljs-preprocessor">.ok</span>(connectedSpy<span class="hljs-preprocessor">.calledOnce</span>)<span class="hljs-comment">;</span>
+assert<span class="hljs-preprocessor">.ok</span>(connectingSpy<span class="hljs-preprocessor">.calledBefore</span>(connectedSpy))<span class="hljs-comment">;</span>
+assert<span class="hljs-preprocessor">.ok</span>(connectedSpy<span class="hljs-preprocessor">.calledAfter</span>(connectingSpy))<span class="hljs-comment">;</span></code></pre><p>transitions state: connecting -&gt; disconnected on unsuccessful connection.</p>
+<pre class="hljs"><code>var oldMock = Driver.<strong>get</strong>(<span class="hljs-attribute">&#39;serialPort</span>&#39;);
+Driver.<strong>set</strong>(<span class="hljs-attribute">&#39;serialPort</span>&#39;, serialPortMock(true));
+var driver = <span class="hljs-keyword">new</span> Driver(URI),
+    connectingSpy   = sinon.spy(),
+    connectedSpy    = sinon.spy(),
+    disconnectedSpy = sinon.spy();
+driver.<span class="hljs-keyword">on</span>(Driver.states.CONNECTING, connectingSpy);
+driver.<span class="hljs-keyword">on</span>(Driver.states.CONNECTED, connectedSpy);
+driver.<span class="hljs-keyword">on</span>(Driver.states.DISCONNECTED, disconnectedSpy);
+driver.connect(undefined, cb);
+<span class="hljs-keyword">assert</span>.ok(connectingSpy.calledOnce);
+<span class="hljs-keyword">assert</span>.ok(disconnectedSpy.calledOnce);
+<span class="hljs-keyword">assert</span>.ok(!connectedSpy.called);
+<span class="hljs-keyword">assert</span>.ok(connectingSpy.calledBefore(disconnectedSpy));
+<span class="hljs-keyword">assert</span>.ok(disconnectedSpy.calledAfter(connectingSpy));
+Driver.<strong>set</strong>(<span class="hljs-attribute">&#39;serialPort</span>&#39;, oldMock);</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+</body>
+</html>

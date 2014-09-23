@@ -1,4 +1,5 @@
 var gulp 	  = require('gulp'),
+	util      = require('util'),
 	gutil     = require('gulp-util'),
 	through   = require('through2'),
 	del  	  = require('del'),
@@ -12,13 +13,16 @@ var gulp 	  = require('gulp'),
 	mocha     = require('gulp-mocha'),
     istanbul  = require('gulp-istanbul'),
     coveralls = require('gulp-coveralls'),
-	PACKAGE  = require('./package.json');
+    shell     = require('gulp-shell'),
+    through   = require('through'),
+    notify    = require('gulp-notify'),
+	PACKAGE   = require('./package.json');
 
 var sourcePaths = {
 	js: ['lib', 'examples', 'tests', 'bin', 'perf'],
 	ignoreJs: ['drivers/index.js', 'protocols/index.js'],
 	implFiles: ['index.js', 'lib/**/*.js'],
-    jsFiles: ['lib/**/*.js', 'examples/**/*.js', 'tests/**/*.js', 'bin/**/*.js', 'perf/**/*.js'],
+    jsFiles: ['lib/**/*.js', 'examples/**/*.js', 'tests/**/*.js', 'bin/**/*.js'],
 	testFiles: ['tests/**/*.js'],
 	md: ['README.md', 'CHANGELOG.md'],
 	man: ['man/NODEQUAD-CLI.md'],
@@ -28,9 +32,12 @@ var sourcePaths = {
 };
 
 var destPaths = {
-	md: 'release/doc',
-	man: 'release/man',
-	js: 'release/doc'
+	md:     'release/doc',
+	man:    'release/man',
+	js:     'release/doc',
+	cover:  'release/coverage',
+	testMd: 'release/test/index.md',
+	tests:   'release/test'
 };
 
 var gulpRonn = function(options) {
@@ -88,6 +95,11 @@ gulp.task('docs:jsdoc-to-html2', function() {
   		.pipe(jsdoc.generator('./release/doc2'));
 });
 
+// creates unit test HTML documentation
+gulp.task('docs:test', shell.task([
+  ['mocha', '--reporter markdown', sourcePaths.testFiles, '>', destPaths.testMd].join(' '),
+  ['generate-md', '--layout mixu-gray', '--input', destPaths.testMd, '--output', destPaths.tests, '--highlight mds-hljs'].join(' ')
+]));
 
 gulp.task('start', ['watch'], function() {
 	connect.server({
@@ -95,7 +107,6 @@ gulp.task('start', ['watch'], function() {
 		port: 8888,
 		livereload: true
 	});
-
 });
 
 gulp.task('reload-release', function() {
@@ -103,9 +114,9 @@ gulp.task('reload-release', function() {
 });
 
 // runs all unit tests
-gulp.task('test', function() {
-	return gulp.src(sourcePaths.testFiles, {read: false})
-			.pipe(mocha());
+// TODO: figure out why watch won't work with this
+gulp.task('test', function(cb) {
+	return gulp.src(sourcePaths.testFiles, {read: false}).pipe(mocha());
 });
 
 // generates code coverage report
@@ -115,29 +126,37 @@ gulp.task('cover', function(cb) {
       .on('finish', function() {
         gulp.src(sourcePaths.testFiles)
           .pipe(mocha())
-          .pipe(istanbul.writeReports())
-          .on('end', cb);
+          .pipe(istanbul.writeReports({
+             dir: destPaths.cover,
+          	 reporters: [ 'lcov', 'json', 'text', 'text-summary' ]
+            })).on('end', function() {
+            	var stats    = istanbul.summarizeCoverage();
+            	var output = [
+            				['Lines:', stats.lines.pct + '%', ['[', stats.lines.covered, '/', stats.lines.total, ']'].join('')].join(' '),
+            				['Statements:', stats.statements.pct + '%', ['[', stats.statements.covered, '/', stats.statements.total, ']'].join('')].join(' '),
+            				['Functions:', stats.functions.pct + '%', ['[', stats.functions.covered, '/', stats.functions.total, ']'].join('')].join(' '),
+            				['Branches:', stats.branches.pct + '%', ['[', stats.branches.covered, '/', stats.branches.total, ']'].join('')].join(' ')
+            			].join("\n");
+            	notify({
+            		title: 'Code Coverage: ' + ((stats.lines.pct + stats.statements.pct + stats.functions.pct + stats.branches.pct) / 4) + '%',
+            		message: output
+            	}).write('');
+          	 cb();
+          });
       });
 });
 
 gulp.task('coveralls', function() {
-    gulp.src('sourcePaths.coverCov')
-     .pipe(coveralls());
+    gulp.src('sourcePaths.coverCov').pipe(coveralls());
 });
 
-// runs performance test suite
-gulp.task('perf', function() {
-
-});
-
-gulp.task('docs', ['docs:md-to-html', 'docs:md-to-man', 'docs:jsdoc-to-html'], function() {
-
-});
+gulp.task('docs', ['docs:md-to-html', 'docs:md-to-man', 'docs:jsdoc-to-html'], function() {});
 
 gulp.task('watch', function() {
+	gulp.watch(sourcePaths.testFiles, ['test', 'cover', 'docs:test']);
 	gulp.watch(sourcePaths.md, ['docs:md-to-html', 'reload-release']);
 	gulp.watch(sourcePaths.man, ['docs:md-to-man', 'reload-release']);
 	gulp.watch(sourcePaths.jsFiles, ['docs:jsdoc-to-html', 'reload-release']);
 });
 
-gulp.task('default', ['docs:md-to-html', 'docs:md-to-man', 'docs:jsdoc-to-html', 'test', 'cover', 'perf', 'start', 'watch']);
+gulp.task('default', ['docs:md-to-html', 'docs:md-to-man', 'docs:jsdoc-to-html', 'test', 'cover', 'start']);

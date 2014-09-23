@@ -100,6 +100,8 @@
               </li>
               <li><a href="#send"><i class="alert alert-info"></i><span>send</span></a>
               </li>
+              <li><a href="#getState"><i class="alert alert-info"></i><span>getState</span></a>
+              </li>
               <li><a href="#getStream"><i class="alert alert-info"></i><span>getStream</span></a>
               </li>
             </ul>
@@ -126,7 +128,7 @@
 	  PROBE_COMMAND = '!',
 	  // probe regexp
 	  PROBE_REGEXP = /(?:\d*\.)?\d+/g;</code></pre>
-          <div class="description"><p>Events emitted during connection state changes. They can be monitored by attaching callbacks to the driver object: driver.on(&#39;state.disconnected&#39;, function() { .. });</p> </div>
+          <div class="description"><p>State events emitted during connection state changes. They can be monitored by attaching callbacks to the driver object: driver.on(&#39;state.disconnected&#39;, function() { .. });<br />States are available on the SerialDriver object (i.e. SerialDriver.states.DISCONNECTED)</p> </div>
           <pre><code class="language-javascript">const states = {
 	DISCONNECTED: [0, 'state.disconnected'],
 	CONNECTING:   [1, 'state.connecting'],
@@ -163,17 +165,7 @@
           <pre><code class="language-javascript">var SerialDriver = module.exports = function SerialDriver(uri) {
 	events.EventEmitter2.call(this, { wildcard: true });
 
-	if(uri) {
-		uri = url.parse(uri);
-
-		this.list(function checkURIByPortList(err, portList) {
-			if(portList.filter(function(port) {
-				port.name === uri.pathname ? true : false;
-			}).length) {
-				this.uri = this.portList.pop().uri;
-			}
-		});
-	}
+	this.queue = [], this.backOffs = [], this.foundPorts = [];
 
 	this.connection = {
 		state: states.DISCONNECTED[0],
@@ -181,7 +173,20 @@
 		uri: {}
 	};
 
-	this.queue = [], this.backOffs = [], this.foundPorts = [];
+	if(uri) {
+		uri = url.parse(uri);
+
+		var self = this;
+		this.list(function checkURIByPortList(err, portList) {
+			if(portList.filter(function(port) {
+				return port.name === uri.pathname ? true : false;
+			}).length) {
+				self.connection.uri = url.parse(portList.pop().uri);
+			} else {
+				self.connection.uri = {};
+			}
+		});
+	}
 
 	this.backOff = backOff[BACKOFF_TYPE]({
 		randomisationFactor: 0,
@@ -189,7 +194,6 @@
 		maxDelay: MAX_TIMEOUT
 	});
 
-	var self = this;
 	this.backOff.on('backoff', function backOffLogger(number, delay) {
     	self.backOffs.push([number, delay]);
 	});
@@ -223,12 +227,18 @@
 		}
 	});
 
-	setInterval(function pollConnectionState() {
-		console.log(self.connection.state, self.queue);
-	}, 2000);
+	//setInterval(function pollConnectionState() {
+	//	console.log(self.connection.state, self.queue);
+	//}, 2000);
 };
 util.inherits(SerialDriver, events.EventEmitter2);
-SerialDriver.prototype.name = 'SerialDriver';</code></pre>
+SerialDriver.prototype.name = 'SerialDriver';
+SerialDriver.states = {};
+var stateIntegerMapping = {};
+Object.keys(states).forEach(function(key) {
+	SerialDriver.states[key] = states[key][1];
+	stateIntegerMapping[states[key][0]] = states[key][1];
+});</code></pre>
           <section id="connect">
             <h1>connect</h1>
             <h5 class="subheader"></h5>
@@ -260,8 +270,12 @@ SerialDriver.prototype.name = 'SerialDriver';</code></pre>
           <div class="description"><p>Connect to the port</p> </div>
           <pre><code class="language-javascript">SerialDriver.prototype.connect = function connect(uri, cb) {
 	var self = this;
-	// use last probe if there is one
-	var uri = uri ? uri : (this.foundPorts.length ? this.foundPorts[this.foundPorts.length-1] : undefined);
+	// use stored uri if there is one
+	var uri = uri ? url.parse(uri) : (this.connection.uri ? this.connection.uri : undefined);
+	if (uri === undefined) {
+		cb.call(this, 'No URI available', undefined);
+		return;
+	}
 
 	this.connection.state = states.CONNECTING[0];
 	this.emit(states.CONNECTING[1]);
@@ -335,7 +349,7 @@ SerialDriver.prototype.name = 'SerialDriver';</code></pre>
           </table>
           <div class="description"><p>List available ports found on the system</p> </div>
           <pre><code class="language-javascript">SerialDriver.prototype.list = function list(cb) {
-	var self = this;	
+	var self = this;
 
 	serialPort.list(function createPortList(err, ports) {
   		if(!err) {
@@ -390,10 +404,10 @@ SerialDriver.prototype.name = 'SerialDriver';</code></pre>
           <pre><code class="language-javascript">SerialDriver.prototype.probe = function probe(probeResultsCb, alsoConnectCb) {
 	var self = this;
 
-	if(alsoConnect) {
+	if(alsoConnectCb) {
 		this.once('pong', function connectOnPong(port) {
 			self.connect(port.uri, function autoConnectErrorCb(err) {
-				alsoConnect.call(self, err, port);
+				alsoConnectCb.call(self, err, port);
 			});
 		});
 	}
@@ -518,6 +532,17 @@ SerialDriver.prototype.name = 'SerialDriver';</code></pre>
 	} else {
 		this.queue.push([data, lineCount, cb]);
 	}
+};</code></pre>
+          <section id="getState">
+            <h1>getState</h1>
+            <h5 class="subheader"></h5>
+            <p>
+              <div class="label label-info radius ctx-type">method</div><span>SerialDriver.prototype.getState()</span> -><span>String</span>
+            </p>
+          </section>
+          <div class="description"><p>Gets the current state of the driver interface</p> </div>
+          <pre><code class="language-javascript">SerialDriver.prototype.getState = function getState() {
+	return stateIntegerMapping[this.connection.state];
 };</code></pre>
           <section id="getStream">
             <h1>getStream</h1>

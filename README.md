@@ -37,19 +37,25 @@ Usage Example
 ----------------
 ``` js
 var Nodequad = require('nodequad');
+
+// create a vehicle instance, corresponding to a single vehicle by calling the constructor
 var vehicle = new Nodequad();
 
+// probe connected ports (currently serial interfaces) and connect to the first available vehicle
 vehicle.probe.andConnect();
 
+// simple event-based API for responding to changes (eventemitter2)
 vehicle.on('driver.state.connected', function() {
 	console.log('Connected to aircraft!');
-
-	console.log('Reading aircraft flight configuration...');
+	
+	// use glob patterns to sync various properties
 	vehicle.sync('config.vehicle.*');
 
+	// changes are automatically synced to the vehicle
 	console.log('Changing aircraft PID rate pid.');
-	vehicle.config.pid.rate.roll = new AeroQuad.PID(1.0, 1.1, 1.2);
+	vehicle.config.pid.rate.roll = new Neroquad.PID(1.0, 1.1, 1.2);
 
+	// you can stream data as well (currently limited to a single stream at a time, but multiple streams coming soon)
 	console.log('Monitoring GPS sensor data...');
 	vehicle.stream('state.gps');
 });
